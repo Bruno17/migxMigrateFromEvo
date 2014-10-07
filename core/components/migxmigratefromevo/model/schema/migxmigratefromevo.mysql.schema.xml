@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="migxmigratefromevo" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" version="1.1">
+	<object class="ActiveUsers" table="active_users" extends="xPDOObject">
+		<field key="internalKey" dbtype="int" precision="9" phptype="integer" null="false" default="0" index="pk" />
+		<field key="username" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="lasthit" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="id" dbtype="int" precision="10" phptype="integer" null="true" />
+		<field key="action" dbtype="varchar" precision="10" phptype="string" null="false" default="" />
+		<field key="ip" dbtype="varchar" precision="20" phptype="string" null="false" default="" />
+
+		<index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE" >
+			<column key="internalKey" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="Categories" table="categories" extends="xPDOSimpleObject">
+		<field key="category" dbtype="varchar" precision="45" phptype="string" null="false" default="" />
+	</object>
+	<object class="ChunkTemplateSettings" table="chunk_template_settings" extends="xPDOObject">
+		<field key="template_id" dbtype="int" precision="11" phptype="integer" null="false" default="0" index="index" />
+		<field key="settings_for" dbtype="varchar" precision="50" phptype="string" null="true" />
+		<field key="settings" dbtype="text" phptype="string" null="true" />
+
+		<index alias="user" name="user" primary="false" unique="false" type="BTREE" >
+			<column key="template_id" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="DocumentGroups" table="document_groups" extends="xPDOSimpleObject">
+		<field key="document_group" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+		<field key="document" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+
+		<index alias="document" name="document" primary="false" unique="false" type="BTREE" >
+			<column key="document" length="" collation="A" null="false" />
+		</index>
+		<index alias="document_group" name="document_group" primary="false" unique="false" type="BTREE" >
+			<column key="document_group" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="DocumentgroupNames" table="documentgroup_names" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" index="unique" />
+		<field key="private_memgroup" dbtype="tinyint" precision="4" phptype="integer" null="true" default="0" />
+		<field key="private_webgroup" dbtype="tinyint" precision="4" phptype="integer" null="true" default="0" />
+
+		<index alias="name" name="name" primary="false" unique="true" type="BTREE" >
+			<column key="name" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="EventLog" table="event_log" extends="xPDOSimpleObject">
+		<field key="eventid" dbtype="int" precision="11" phptype="integer" null="true" default="0" />
+		<field key="createdon" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="type" dbtype="tinyint" precision="4" phptype="integer" null="false" default="1" />
+		<field key="user" dbtype="int" precision="11" phptype="integer" null="false" default="0" index="index" />
+		<field key="usertype" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+		<field key="source" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="description" dbtype="text" phptype="string" null="true" />
+
+		<index alias="user" name="user" primary="false" unique="false" type="BTREE" >
+			<column key="user" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="FdCount" table="fd_count" extends="xPDOSimpleObject">
+		<field key="filename" dbtype="text" phptype="string" null="true" />
+		<field key="count" dbtype="int" precision="10" phptype="integer" null="true" default="0" />
+	</object>
+	<object class="JotContent" table="jot_content" extends="xPDOSimpleObject">
+		<field key="title" dbtype="varchar" precision="255" phptype="string" null="true" />
+		<field key="tagid" dbtype="varchar" precision="50" phptype="string" null="true" index="index" />
+		<field key="published" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="uparent" dbtype="int" precision="10" phptype="integer" null="false" index="index" />
+		<field key="parent" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+		<field key="flags" dbtype="varchar" precision="25" phptype="string" null="true" />
+		<field key="secip" dbtype="varchar" precision="32" phptype="string" null="true" index="index" />
+		<field key="sechash" dbtype="varchar" precision="32" phptype="string" null="true" />
+		<field key="content" dbtype="mediumtext" phptype="string" null="true" />
+		<field key="mode" dbtype="int" precision="1" phptype="integer" null="false" default="1" />
+		<field key="createdby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="createdon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="editedby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="editedon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="deleted" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="deletedon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="deletedby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="publishedon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="publishedby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+
+		<index alias="parent" name="parent" primary="false" unique="false" type="BTREE" >
+			<column key="parent" length="" collation="A" null="false" />
+		</index>
+		<index alias="secip" name="secip" primary="false" unique="false" type="BTREE" >
+			<column key="secip" length="" collation="A" null="true" />
+		</index>
+		<index alias="tagidx" name="tagidx" primary="false" unique="false" type="BTREE" >
+			<column key="tagid" length="" collation="A" null="true" />
+		</index>
+		<index alias="uparent" name="uparent" primary="false" unique="false" type="BTREE" >
+			<column key="uparent" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="JotFields" table="jot_fields" extends="xPDOObject">
+		<field key="id" dbtype="mediumint" precision="10" phptype="integer" null="false" index="index" />
+		<field key="label" dbtype="varchar" precision="50" phptype="string" null="false" index="index" />
+		<field key="content" dbtype="text" phptype="string" null="true" />
+
+		<index alias="id" name="id" primary="false" unique="false" type="BTREE" >
+			<column key="id" length="" collation="A" null="false" />
+		</index>
+		<index alias="label" name="label" primary="false" unique="false" type="BTREE" >
+			<column key="label" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="JotSubscriptions" table="jot_subscriptions" extends="xPDOSimpleObject">
+		<field key="uparent" dbtype="mediumint" precision="10" phptype="integer" null="false" index="index" />
+		<field key="tagid" dbtype="varchar" precision="50" phptype="string" null="false" index="index" />
+		<field key="userid" dbtype="mediumint" precision="10" phptype="integer" null="false" index="index" />
+
+		<index alias="uparent" name="uparent" primary="false" unique="false" type="BTREE" >
+			<column key="uparent" length="" collation="A" null="false" />
+		</index>
+		<index alias="tagid" name="tagid" primary="false" unique="false" type="BTREE" >
+			<column key="tagid" length="" collation="A" null="false" />
+		</index>
+		<index alias="userid" name="userid" primary="false" unique="false" type="BTREE" >
+			<column key="userid" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="KeywordXref" table="keyword_xref" extends="xPDOObject">
+		<field key="content_id" dbtype="int" precision="11" phptype="integer" null="false" default="0" index="index" />
+		<field key="keyword_id" dbtype="int" precision="11" phptype="integer" null="false" default="0" index="index" />
+
+		<index alias="content_id" name="content_id" primary="false" unique="false" type="BTREE" >
+			<column key="content_id" length="" collation="A" null="false" />
+		</index>
+		<index alias="keyword_id" name="keyword_id" primary="false" unique="false" type="BTREE" >
+			<column key="keyword_id" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="Mailverteiler" table="mailverteiler" extends="xPDOSimpleObject">
+		<field key="email" dbtype="varchar" precision="100" phptype="string" null="true" default="" />
+		<field key="vorname" dbtype="varchar" precision="100" phptype="string" null="true" default="" />
+		<field key="nachname" dbtype="varchar" precision="100" phptype="string" null="true" default="" />
+		<field key="senden" dbtype="int" precision="1" phptype="integer" null="true" default="0" />
+	</object>
+	<object class="ManagerLog" table="manager_log" extends="xPDOSimpleObject">
+		<field key="timestamp" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="internalKey" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="username" dbtype="varchar" precision="255" phptype="string" null="true" />
+		<field key="action" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="itemid" dbtype="varchar" precision="10" phptype="string" null="true" default="0" />
+		<field key="itemname" dbtype="varchar" precision="255" phptype="string" null="true" />
+		<field key="message" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+	</object>
+	<object class="ManagerUsers" table="manager_users" extends="xPDOSimpleObject">
+		<field key="username" dbtype="varchar" precision="100" phptype="string" null="false" default="" index="unique" />
+		<field key="password" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+
+		<index alias="username" name="username" primary="false" unique="true" type="BTREE" >
+			<column key="username" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="Maxigallery" table="maxigallery" extends="xPDOSimpleObject">
+		<field key="gal_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" />
+		<field key="filename" dbtype="tinytext" phptype="string" null="false" />
+		<field key="title" dbtype="text" phptype="string" null="false" />
+		<field key="date" dbtype="datetime" phptype="datetime" null="false" />
+		<field key="descr" dbtype="text" phptype="string" null="true" />
+		<field key="pos" dbtype="int" precision="10" phptype="integer" null="true" />
+		<field key="own_id" dbtype="int" precision="10" phptype="integer" null="true" />
+		<field key="hide" dbtype="int" precision="1" phptype="integer" null="true" default="0" />
+	</object>
+	<object class="MemberGroups" table="member_groups" extends="xPDOSimpleObject">
+		<field key="user_group" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="member" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="MembergroupAccess" table="membergroup_access" extends="xPDOSimpleObject">
+		<field key="membergroup" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="documentgroup" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="MembergroupNames" table="membergroup_names" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" index="unique" />
+
+		<index alias="name" name="name" primary="false" unique="true" type="BTREE" >
+			<column key="name" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="RegattaAktivenliste" table="regatta_aktivenliste" extends="xPDOSimpleObject">
+		<field key="akt_id" dbtype="varchar" precision="20" phptype="string" null="true" index="index" />
+		<field key="vorname" dbtype="varchar" precision="50" phptype="string" null="true" index="index" />
+		<field key="nachname" dbtype="varchar" precision="50" phptype="string" null="true" index="index" />
+		<field key="titel" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="geschlecht" dbtype="varchar" precision="1" phptype="string" null="true" />
+		<field key="jahrgang" dbtype="int" precision="11" phptype="integer" null="true" />
+		<field key="vereinsnummer" dbtype="varchar" precision="10" phptype="string" null="true" />
+		<field key="vereinsname" dbtype="varchar" precision="100" phptype="string" null="true" />
+		<field key="startberechtigt" dbtype="varchar" precision="20" phptype="string" null="true" />
+
+		<index alias="akt_id" name="akt_id" primary="false" unique="false" type="BTREE" >
+			<column key="akt_id" length="" collation="A" null="true" />
+		</index>
+		<index alias="vorname" name="vorname" primary="false" unique="false" type="BTREE" >
+			<column key="vorname" length="" collation="A" null="true" />
+		</index>
+		<index alias="nachname" name="nachname" primary="false" unique="false" type="BTREE" >
+			<column key="nachname" length="" collation="A" null="true" />
+		</index>
+	</object>
+	<object class="RegattaAltersklassen" table="regatta_altersklassen" extends="xPDOSimpleObject">
+		<field key="rennklasse" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="altersklasse" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="min" dbtype="int" precision="10" phptype="integer" null="true" />
+		<field key="mda" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" />
+		<field key="max" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" />
+		<field key="extra" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="langbez" dbtype="varchar" precision="50" phptype="string" null="true" />
+		<field key="geschlecht" dbtype="varchar" precision="10" phptype="string" null="true" />
+		<field key="shortname" dbtype="varchar" precision="30" phptype="string" null="false" />
+	</object>
+	<object class="RegattaAusschreibung" table="regatta_ausschreibung" extends="xPDOSimpleObject">
+		<field key="nr" dbtype="varchar" precision="10" phptype="string" null="true" />
+		<field key="rennklasse" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="altersklasse" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="bootsklasse" dbtype="varchar" precision="30" phptype="string" null="true" />
+		<field key="gig" dbtype="varchar" precision="10" phptype="string" null="true" />
+		<field key="vereinsmannschaft" dbtype="varchar" precision="10" phptype="string" null="true" />
+		<field key="strecke" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" />
+		<field key="besonderheiten" dbtype="varchar" precision="100" phptype="string" null="true" />
+		<field key="meldegeld" dbtype="varchar" precision="10" phptype="string" null="true" />
+		<field key="zeitvorgabe" dbtype="varchar" precision="10" phptype="string" null="true" />
+	</object>
+	<object class="RegattaBootsklassen" table="regatta_bootsklassen" extends="xPDOSimpleObject">
+		<field key="bootsklasse" dbtype="varchar" precision="50" phptype="string" null="true" />
+		<field key="langbezeichnung" dbtype="varchar" precision="150" phptype="string" null="true" />
+		<field key="rowers" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" />
+		<field key="cox" dbtype="varchar" precision="1" phptype="string" null="true" />
+	</object>
+	<object class="RegattaMeldungen" table="regatta_meldungen" extends="xPDOSimpleObject">
+		<field key="startnummer" dbtype="varchar" precision="10" phptype="string" null="true" />
+		<field key="startzeit" dbtype="varchar" precision="10" phptype="string" null="true" />
+		<field key="rennennr" dbtype="varchar" precision="10" phptype="string" null="true" index="index" />
+		<field key="cox" dbtype="varchar" precision="15" phptype="string" null="false" default="0" />
+		<field key="row1" dbtype="varchar" precision="15" phptype="string" null="false" default="0" />
+		<field key="row2" dbtype="varchar" precision="15" phptype="string" null="false" default="0" />
+		<field key="row3" dbtype="varchar" precision="15" phptype="string" null="false" default="0" />
+		<field key="row4" dbtype="varchar" precision="15" phptype="string" null="false" default="0" />
+		<field key="row5" dbtype="varchar" precision="15" phptype="string" null="false" default="0" />
+		<field key="row6" dbtype="varchar" precision="15" phptype="string" null="false" default="0" />
+		<field key="row7" dbtype="varchar" precision="15" phptype="string" null="false" default="0" />
+		<field key="row8" dbtype="varchar" precision="15" phptype="string" null="false" default="0" />
+		<field key="fixzeit" dbtype="varchar" precision="1" phptype="string" null="true" />
+		<field key="meldestatus" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="rennstartold" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="rennzielold" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="meldeverein" dbtype="varchar" precision="100" phptype="string" null="true" />
+		<field key="rennstatusold" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="xstartzeit" dbtype="varchar" precision="10" phptype="string" null="false" />
+		<field key="nachmeldung" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="boot" dbtype="varchar" precision="10" phptype="string" null="true" />
+		<field key="eventjahr" dbtype="varchar" precision="10" phptype="string" null="true" />
+		<field key="deleted" dbtype="varchar" precision="1" phptype="string" null="false" default="0" />
+		<field key="comment" dbtype="text" phptype="string" null="true" />
+		<field key="resultprinted" dbtype="varchar" precision="2" phptype="string" null="false" default="0" />
+		<field key="eventID" dbtype="int" precision="11" phptype="integer" null="false" />
+		<field key="platz" dbtype="varchar" precision="5" phptype="string" null="false" />
+		<field key="bootsklasse" dbtype="varchar" precision="5" phptype="string" null="false" />
+		<field key="rennklasse" dbtype="varchar" precision="20" phptype="string" null="false" />
+		<field key="kosten" dbtype="varchar" precision="5" phptype="string" null="false" />
+		<field key="lg" dbtype="varchar" precision="5" phptype="string" null="false" />
+		<field key="leistungsklasse" dbtype="varchar" precision="5" phptype="string" null="false" />
+		<field key="platz_vorlauf" dbtype="varchar" precision="5" phptype="string" null="false" />
+		<field key="platz_halbfinale" dbtype="varchar" precision="5" phptype="string" null="false" />
+		<field key="platz_hofflauf" dbtype="varchar" precision="5" phptype="string" null="false" />
+		<field key="has_vorlauf" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="has_halbfinale" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="has_hofflauf" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="startzeit_vorlauf" dbtype="varchar" precision="20" phptype="string" null="false" />
+		<field key="startzeit_halbfinale" dbtype="varchar" precision="20" phptype="string" null="false" />
+		<field key="startzeit_hofflauf" dbtype="varchar" precision="20" phptype="string" null="false" />
+
+		<index alias="rennennr" name="rennennr" primary="false" unique="false" type="BTREE" >
+			<column key="rennennr" length="" collation="A" null="true" />
+		</index>
+	</object>
+	<object class="RegattaStartZielzeiten" table="regatta_start_zielzeiten" extends="xPDOSimpleObject">
+		<field key="startnummer" dbtype="varchar" precision="10" phptype="string" null="true" />
+		<field key="rennennr" dbtype="varchar" precision="10" phptype="string" null="true" index="index" />
+		<field key="rennstart" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="rennziel" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="rennstatus" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="eventjahr" dbtype="varchar" precision="10" phptype="string" null="true" />
+		<field key="deleted" dbtype="varchar" precision="1" phptype="string" null="false" default="0" />
+
+		<index alias="rennennr" name="rennennr" primary="false" unique="false" type="BTREE" >
+			<column key="rennennr" length="" collation="A" null="true" />
+		</index>
+	</object>
+	<object class="RegattaVereine" table="regatta_vereine" extends="xPDOSimpleObject">
+		<field key="vereinsnummer" dbtype="varchar" precision="10" phptype="string" null="true" index="index" />
+		<field key="vereinsname" dbtype="varchar" precision="150" phptype="string" null="true" />
+		<field key="ort" dbtype="varchar" precision="100" phptype="string" null="true" />
+		<field key="kurzform" dbtype="varchar" precision="100" phptype="string" null="true" />
+		<field key="lettern" dbtype="varchar" precision="15" phptype="string" null="true" />
+
+		<index alias="vereinsnummer" name="vereinsnummer" primary="false" unique="false" type="BTREE" >
+			<column key="vereinsnummer" length="" collation="A" null="true" />
+		</index>
+	</object>
+	<object class="RgmEvents" table="rgm_events" extends="xPDOSimpleObject">
+		<field key="Time" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="adress_id" dbtype="int" precision="10" phptype="integer" null="false" />
+		<field key="category" dbtype="varchar" precision="50" phptype="string" null="false" default="0" />
+		<field key="owner_id" dbtype="int" precision="10" phptype="integer" null="false" />
+		<field key="published" dbtype="int" precision="1" phptype="integer" null="false" />
+		<field key="class" dbtype="varchar" precision="20" phptype="string" null="false" />
+		<field key="Timeend" dbtype="int" precision="20" phptype="integer" null="false" />
+		<field key="pagetitle" dbtype="varchar" precision="250" phptype="string" null="false" />
+		<field key="tpl" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="docid" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="createdby" dbtype="int" precision="10" phptype="integer" null="false" />
+		<field key="description" dbtype="text" phptype="string" null="false" />
+		<field key="kategorie" dbtype="varchar" precision="50" phptype="string" null="false" />
+		<field key="subkategorie" dbtype="varchar" precision="50" phptype="string" null="false" />
+		<field key="content" dbtype="text" phptype="string" null="false" />
+		<field key="isbericht" dbtype="varchar" precision="1" phptype="string" null="false" />
+		<field key="longtitle" dbtype="varchar" precision="200" phptype="string" null="false" default="Schlagzeile" />
+		<field key="gal_id" dbtype="varchar" precision="50" phptype="string" null="false" />
+	</object>
+	<object class="SiteContent" table="site_content" extends="xPDOSimpleObject">
+		<field key="type" dbtype="varchar" precision="20" phptype="string" null="false" default="document" />
+		<field key="contentType" dbtype="varchar" precision="50" phptype="string" null="false" default="text/html" />
+		<field key="pagetitle" dbtype="varchar" precision="255" phptype="string" null="false" index="index" />
+		<field key="longtitle" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="description" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="alias" dbtype="varchar" precision="255" phptype="string" null="true" index="index" />
+		<field key="link_attributes" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="published" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="pub_date" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="unpub_date" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="parent" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+		<field key="isfolder" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="introtext" dbtype="text" phptype="string" null="true" />
+		<field key="content" dbtype="mediumtext" phptype="string" null="true" />
+		<field key="richtext" dbtype="tinyint" precision="1" phptype="integer" null="false" default="1" />
+		<field key="template" dbtype="int" precision="10" phptype="integer" null="false" default="1" />
+		<field key="menuindex" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="searchable" dbtype="int" precision="1" phptype="integer" null="false" default="1" />
+		<field key="cacheable" dbtype="int" precision="1" phptype="integer" null="false" default="1" />
+		<field key="createdby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="createdon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="editedby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="editedon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="deleted" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="deletedon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="deletedby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="publishedon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="publishedby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="menutitle" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="donthit" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
+		<field key="haskeywords" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
+		<field key="hasmetatags" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
+		<field key="privateweb" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
+		<field key="privatemgr" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
+		<field key="content_dispo" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
+		<field key="hidemenu" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
+
+		<index alias="id" name="id" primary="false" unique="false" type="BTREE" >
+			<column key="id" length="" collation="A" null="false" />
+		</index>
+		<index alias="parent" name="parent" primary="false" unique="false" type="BTREE" >
+			<column key="parent" length="" collation="A" null="false" />
+		</index>
+		<index alias="aliasidx" name="aliasidx" primary="false" unique="false" type="BTREE" >
+			<column key="alias" length="" collation="A" null="true" />
+		</index>
+		<index alias="content_ft_idx" name="content_ft_idx" primary="false" unique="false" type="FULLTEXT" >
+			<column key="pagetitle" length="" collation="" null="false" />
+			<column key="description" length="" collation="" null="false" />
+			<column key="content" length="" collation="" null="true" />
+		</index>
+	</object>
+	<object class="SiteContentMetatags" table="site_content_metatags" extends="xPDOObject">
+		<field key="content_id" dbtype="int" precision="11" phptype="integer" null="false" default="0" index="index" />
+		<field key="metatag_id" dbtype="int" precision="11" phptype="integer" null="false" default="0" index="index" />
+
+		<index alias="content_id" name="content_id" primary="false" unique="false" type="BTREE" >
+			<column key="content_id" length="" collation="A" null="false" />
+		</index>
+		<index alias="metatag_id" name="metatag_id" primary="false" unique="false" type="BTREE" >
+			<column key="metatag_id" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="SiteHtmlsnippets" table="site_htmlsnippets" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="Chunk" />
+		<field key="editor_type" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="category" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="cache_type" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
+		<field key="snippet" dbtype="mediumtext" phptype="string" null="true" />
+		<field key="locked" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="SiteKeywords" table="site_keywords" extends="xPDOSimpleObject">
+		<field key="keyword" dbtype="varchar" precision="40" phptype="string" null="false" default="" index="unique" />
+
+		<index alias="keyword" name="keyword" primary="false" unique="true" type="BTREE" >
+			<column key="keyword" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="SiteMetatags" table="site_metatags" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="tag" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="tagvalue" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="http_equiv" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="SiteModuleAccess" table="site_module_access" extends="xPDOSimpleObject">
+		<field key="module" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="usergroup" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="SiteModuleDepobj" table="site_module_depobj" extends="xPDOSimpleObject">
+		<field key="module" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="resource" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="type" dbtype="int" precision="2" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="SiteModules" table="site_modules" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="0" />
+		<field key="editor_type" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="disabled" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+		<field key="category" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="wrap" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+		<field key="locked" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+		<field key="icon" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="enable_resource" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+		<field key="resourcefile" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="createdon" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="editedon" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="guid" dbtype="varchar" precision="32" phptype="string" null="false" default="" />
+		<field key="enable_sharedparams" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+		<field key="properties" dbtype="text" phptype="string" null="true" />
+		<field key="modulecode" dbtype="mediumtext" phptype="string" null="true" />
+	</object>
+	<object class="SitePluginEvents" table="site_plugin_events" extends="xPDOObject">
+		<field key="pluginid" dbtype="int" precision="10" phptype="integer" null="false" />
+		<field key="evtid" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="priority" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="SitePlugins" table="site_plugins" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="Plugin" />
+		<field key="editor_type" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="category" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="cache_type" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
+		<field key="plugincode" dbtype="mediumtext" phptype="string" null="true" />
+		<field key="locked" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+		<field key="properties" dbtype="text" phptype="string" null="true" />
+		<field key="disabled" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+		<field key="moduleguid" dbtype="varchar" precision="32" phptype="string" null="false" default="" />
+	</object>
+	<object class="SiteSnippets" table="site_snippets" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="Snippet" />
+		<field key="editor_type" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="category" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="cache_type" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
+		<field key="snippet" dbtype="mediumtext" phptype="string" null="true" />
+		<field key="locked" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+		<field key="properties" dbtype="text" phptype="string" null="true" />
+		<field key="moduleguid" dbtype="varchar" precision="32" phptype="string" null="false" default="" />
+	</object>
+	<object class="SiteTemplates" table="site_templates" extends="xPDOSimpleObject">
+		<field key="templatename" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="Template" />
+		<field key="editor_type" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="category" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="icon" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="template_type" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="content" dbtype="mediumtext" phptype="string" null="true" />
+		<field key="locked" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="SiteTmplvarAccess" table="site_tmplvar_access" extends="xPDOSimpleObject">
+		<field key="tmplvarid" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="documentgroup" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="SiteTmplvarContentvalues" table="site_tmplvar_contentvalues" extends="xPDOSimpleObject">
+		<field key="tmplvarid" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+		<field key="contentid" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+		<field key="value" dbtype="text" phptype="string" null="true" />
+
+		<index alias="idx_tmplvarid" name="idx_tmplvarid" primary="false" unique="false" type="BTREE" >
+			<column key="tmplvarid" length="" collation="A" null="false" />
+		</index>
+		<index alias="idx_id" name="idx_id" primary="false" unique="false" type="BTREE" >
+			<column key="contentid" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="SiteTmplvarTemplates" table="site_tmplvar_templates" extends="xPDOObject">
+		<field key="tmplvarid" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="pk" />
+		<field key="templateid" dbtype="int" precision="11" phptype="integer" null="false" default="0" index="pk" />
+		<field key="rank" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+
+		<index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE" >
+			<column key="tmplvarid" length="" collation="A" null="false" />
+			<column key="templateid" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="SiteTmplvars" table="site_tmplvars" extends="xPDOSimpleObject">
+		<field key="type" dbtype="varchar" precision="20" phptype="string" null="false" default="" />
+		<field key="name" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="caption" dbtype="varchar" precision="80" phptype="string" null="false" default="" />
+		<field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="editor_type" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="category" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="locked" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+		<field key="elements" dbtype="text" phptype="string" null="true" />
+		<field key="rank" dbtype="int" precision="11" phptype="integer" null="false" default="0" index="index" />
+		<field key="display" dbtype="varchar" precision="20" phptype="string" null="false" default="" />
+		<field key="display_params" dbtype="text" phptype="string" null="true" />
+		<field key="default_text" dbtype="text" phptype="string" null="true" />
+
+		<index alias="indx_rank" name="indx_rank" primary="false" unique="false" type="BTREE" >
+			<column key="rank" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="SystemEventnames" table="system_eventnames" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="service" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+		<field key="groupname" dbtype="varchar" precision="20" phptype="string" null="false" default="" />
+	</object>
+	<object class="SystemSettings" table="system_settings" extends="xPDOObject">
+		<field key="setting_name" dbtype="varchar" precision="50" phptype="string" null="false" default="" index="pk" />
+		<field key="setting_value" dbtype="text" phptype="string" null="true" />
+
+		<index alias="setting_name" name="setting_name" primary="false" unique="true" type="BTREE" >
+			<column key="setting_name" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="Timetable" table="timetable" extends="xPDOObject">
+		<field key="ID" dbtype="int" precision="10" phptype="integer" null="false" index="pk"  generated="native" />
+		<field key="Time" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="adress_id" dbtype="int" precision="10" phptype="integer" null="false" />
+		<field key="category" dbtype="varchar" precision="50" phptype="string" null="false" default="0" />
+		<field key="owner_id" dbtype="int" precision="10" phptype="integer" null="false" />
+		<field key="published" dbtype="int" precision="1" phptype="integer" null="false" />
+		<field key="class" dbtype="varchar" precision="20" phptype="string" null="false" />
+		<field key="Timeend" dbtype="int" precision="20" phptype="integer" null="false" />
+		<field key="title" dbtype="varchar" precision="250" phptype="string" null="false" />
+		<field key="tpl" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="docid" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="createdby" dbtype="int" precision="10" phptype="integer" null="false" />
+		<field key="desc" dbtype="text" phptype="string" null="false" />
+
+		<index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE" >
+			<column key="ID" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="TimetableCategories" table="timetable_categories" extends="xPDOObject">
+		<field key="category" dbtype="varchar" precision="5" phptype="string" null="false" />
+		<field key="category_name" dbtype="varchar" precision="250" phptype="string" null="false" />
+		<field key="category_parent" dbtype="varchar" precision="250" phptype="string" null="false" />
+	</object>
+	<object class="Trainingszeiten" table="trainingszeiten" extends="xPDOSimpleObject">
+		<field key="Tag" dbtype="varchar" precision="10" phptype="string" null="false" />
+		<field key="Zeitweise" dbtype="varchar" precision="30" phptype="string" null="false" />
+		<field key="Uhrzeit" dbtype="varchar" precision="15" phptype="string" null="false" />
+		<field key="Ort" dbtype="varchar" precision="200" phptype="string" null="false" />
+		<field key="Zielgruppe" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="Trainingsart" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="Trainer" dbtype="varchar" precision="200" phptype="string" null="false" />
+		<field key="Zeitraum" dbtype="varchar" precision="10" phptype="string" null="false" />
+	</object>
+	<object class="UserAttributes" table="user_attributes" extends="xPDOSimpleObject">
+		<field key="internalKey" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+		<field key="fullname" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="role" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="email" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="phone" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="mobilephone" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="blocked" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="blockeduntil" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="blockedafter" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="logincount" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="lastlogin" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="thislogin" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="failedlogincount" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="sessionid" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="dob" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="gender" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="country" dbtype="varchar" precision="5" phptype="string" null="false" default="" />
+		<field key="state" dbtype="varchar" precision="25" phptype="string" null="false" default="" />
+		<field key="zip" dbtype="varchar" precision="25" phptype="string" null="false" default="" />
+		<field key="fax" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="photo" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="comment" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+
+		<index alias="userid" name="userid" primary="false" unique="false" type="BTREE" >
+			<column key="internalKey" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="UserMessages" table="user_messages" extends="xPDOSimpleObject">
+		<field key="type" dbtype="varchar" precision="15" phptype="string" null="false" default="" />
+		<field key="subject" dbtype="varchar" precision="60" phptype="string" null="false" default="" />
+		<field key="message" dbtype="text" phptype="string" null="true" />
+		<field key="sender" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="recipient" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="private" dbtype="tinyint" precision="4" phptype="integer" null="false" default="0" />
+		<field key="postdate" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="messageread" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="UserRoles" table="user_roles" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="frames" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="home" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="view_document" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="new_document" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="save_document" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="publish_document" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="delete_document" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="action_ok" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="logout" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="help" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="messages" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="new_user" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="edit_user" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="logs" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="edit_parser" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="save_parser" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="edit_template" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="settings" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="credits" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="new_template" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="save_template" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="delete_template" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="edit_snippet" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="new_snippet" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="save_snippet" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="delete_snippet" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="edit_chunk" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="new_chunk" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="save_chunk" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="delete_chunk" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="empty_cache" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="edit_document" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="change_password" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="error_dialog" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="about" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="file_manager" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="save_user" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="delete_user" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="save_password" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="edit_role" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="save_role" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="delete_role" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="new_role" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="access_permissions" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="bk_manager" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="new_plugin" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="edit_plugin" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="save_plugin" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="delete_plugin" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="new_module" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="edit_module" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="save_module" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="delete_module" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="exec_module" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="view_eventlog" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="delete_eventlog" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="manage_metatags" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="edit_doc_metatags" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="new_web_user" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="edit_web_user" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="save_web_user" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="delete_web_user" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="web_access_permissions" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="view_unpublished" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="import_static" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="export_static" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="UserSettings" table="user_settings" extends="xPDOObject">
+		<field key="user" dbtype="int" precision="11" phptype="integer" null="false" index="index" />
+		<field key="setting_name" dbtype="varchar" precision="50" phptype="string" null="false" default="" index="index" />
+		<field key="setting_value" dbtype="text" phptype="string" null="true" />
+
+		<index alias="setting_name" name="setting_name" primary="false" unique="false" type="BTREE" >
+			<column key="setting_name" length="" collation="A" null="false" />
+		</index>
+		<index alias="user" name="user" primary="false" unique="false" type="BTREE" >
+			<column key="user" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="WebGroups" table="web_groups" extends="xPDOSimpleObject">
+		<field key="webgroup" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="webuser" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="WebUserAttributes" table="web_user_attributes" extends="xPDOSimpleObject">
+		<field key="internalKey" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+		<field key="fullname" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="role" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="email" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="phone" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="mobilephone" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="blocked" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="blockeduntil" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="blockedafter" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="logincount" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="lastlogin" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="thislogin" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="failedlogincount" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="sessionid" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="dob" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="gender" dbtype="int" precision="1" phptype="integer" null="false" default="0" />
+		<field key="country" dbtype="varchar" precision="5" phptype="string" null="false" default="" />
+		<field key="state" dbtype="varchar" precision="25" phptype="string" null="false" default="" />
+		<field key="zip" dbtype="varchar" precision="25" phptype="string" null="false" default="" />
+		<field key="fax" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="photo" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="comment" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="lum_StyleID" dbtype="int" precision="3" phptype="integer" null="false" default="1" />
+		<field key="lum_CustomStyle" dbtype="varchar" precision="255" phptype="string" null="true" />
+		<field key="lum_FirstName" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="lum_LastName" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="lum_VerificationKey" dbtype="varchar" precision="50" phptype="string" null="false" default="" />
+		<field key="lum_EmailVerificationKey" dbtype="varchar" precision="50" phptype="string" null="true" />
+		<field key="lum_UtilizeEmail" dbtype="enum" precision="'1','0'" phptype="string" null="false" default="0" />
+		<field key="lum_ShowName" dbtype="enum" precision="'1','0'" phptype="string" null="false" default="1" />
+		<field key="lum_Icon" dbtype="varchar" precision="255" phptype="string" null="true" />
+		<field key="lum_Attributes" dbtype="text" phptype="string" null="true" />
+		<field key="lum_CountDiscussions" dbtype="int" precision="8" phptype="integer" null="false" default="0" />
+		<field key="lum_CountComments" dbtype="int" precision="8" phptype="integer" null="false" default="0" />
+		<field key="lum_DateFirstVisit" dbtype="datetime" phptype="datetime" null="false" default="2007-01-01 00:00:00" />
+		<field key="lum_DateLastActive" dbtype="datetime" phptype="datetime" null="false" default="2007-01-01 00:00:00" />
+		<field key="lum_RemoteIp" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="lum_LastDiscussionPost" dbtype="datetime" phptype="datetime" null="true" />
+		<field key="lum_DiscussionSpamCheck" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="lum_LastCommentPost" dbtype="datetime" phptype="datetime" null="true" />
+		<field key="lum_CommentSpamCheck" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="lum_UserBlocksCategories" dbtype="enum" precision="'1','0'" phptype="string" null="false" default="0" />
+		<field key="lum_DefaultFormatType" dbtype="varchar" precision="20" phptype="string" null="true" />
+		<field key="lum_Discovery" dbtype="text" phptype="string" null="true" />
+		<field key="lum_Preferences" dbtype="text" phptype="string" null="true" />
+		<field key="lum_SendNewApplicantNotifications" dbtype="enum" precision="'1','0'" phptype="string" null="false" default="0" />
+
+		<index alias="userid" name="userid" primary="false" unique="false" type="BTREE" >
+			<column key="internalKey" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="WebUserAttributesExtended" table="web_user_attributes_extended" extends="xPDOSimpleObject">
+		<field key="internalKey" dbtype="int" precision="10" phptype="integer" null="false" index="index" />
+		<field key="city" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="street" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="funktion" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="FreeMit" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="FreeEd" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="FreeVor" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="FreeDr" dbtype="varchar" precision="255" phptype="string" null="false" />
+
+		<index alias="userid" name="userid" primary="false" unique="false" type="BTREE" >
+			<column key="internalKey" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="WebUserSettings" table="web_user_settings" extends="xPDOObject">
+		<field key="webuser" dbtype="int" precision="11" phptype="integer" null="false" index="index" />
+		<field key="setting_name" dbtype="varchar" precision="50" phptype="string" null="false" default="" index="index" />
+		<field key="setting_value" dbtype="text" phptype="string" null="true" />
+
+		<index alias="setting_name" name="setting_name" primary="false" unique="false" type="BTREE" >
+			<column key="setting_name" length="" collation="A" null="false" />
+		</index>
+		<index alias="webuserid" name="webuserid" primary="false" unique="false" type="BTREE" >
+			<column key="webuser" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="WebUsers" table="web_users" extends="xPDOSimpleObject">
+		<field key="username" dbtype="varchar" precision="100" phptype="string" null="false" default="" index="unique" />
+		<field key="password" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="cachepwd" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="lum_RoleID" dbtype="int" precision="2" phptype="integer" null="false" default="6" />
+
+		<index alias="username" name="username" primary="false" unique="true" type="BTREE" >
+			<column key="username" length="" collation="A" null="false" />
+		</index>
+	</object>
+	<object class="WebgroupAccess" table="webgroup_access" extends="xPDOSimpleObject">
+		<field key="webgroup" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="documentgroup" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="WebgroupNames" table="webgroup_names" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" index="unique" />
+
+		<index alias="name" name="name" primary="false" unique="true" type="BTREE" >
+			<column key="name" length="" collation="A" null="false" />
+		</index>
+	</object>
+</model>
